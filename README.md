@@ -1,9 +1,9 @@
 # llm-moonshot
 LLM plugin for Moonshot AI’s models
 
-[![PyPI](https://img.shields.io/pypi/v/llm-moonshot.svg)](hhttps://pypi.org/project/llm-moonshot/0.2.1/)
+[![PyPI](https://img.shields.io/pypi/v/llm-moonshot.svg)](hhttps://pypi.org/project/llm-moonshot/0.2.2/)
 [![Changelog](https://img.shields.io/github/v/release/ghostofpokemon/llm-moonshot?include_prereleases&label=changelog)](https://github.com/ghostofpokemon/llm-moonshot/releases)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ghostofpokemon/llm-moonshot/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/ghostofpokemon/llm-moonshot/blob/main/LICENSE)
 
 [LLM](https://llm.datasette.io/) plugin for models hosted by [Moonshot AI](https://platform.moonshot.ai/).
 
