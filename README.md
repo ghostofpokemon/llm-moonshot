@@ -1,28 +1,28 @@
-# llm-xai
-LLM plugin to access xAI's models
+# llm-moonshot
+LLM plugin for Moonshot AI’s models
 
-[![PyPI](https://img.shields.io/pypi/v/llm-xai.svg)](https://pypi.org/project/llm-xai/0.2/)
-[![Changelog](https://img.shields.io/github/v/release/ghostofpokemon/llm-xai?include_prereleases&label=changelog)](https://github.com/ghostofpokemon/llm-xai/releases)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ghostofpokemon/llm-xai/blob/main/LICENSE)
-[LLM](https://llm.datasette.io/) plugin for models hosted by [xAI](https://x.ai/)
+[![PyPI](https://img.shields.io/pypi/v/llm-moonshot.svg)](hhttps://pypi.org/project/llm-moonshot/0.2.1/)
+[![Changelog](https://img.shields.io/github/v/release/ghostofpokemon/llm-moonshot?include_prereleases&label=changelog)](https://github.com/ghostofpokemon/llm-moonshot/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ghostofpokemon/llm-moonshot/blob/main/LICENSE)
+
+[LLM](https://llm.datasette.io/) plugin for models hosted by [Moonshot AI](https://platform.moonshot.ai/).
 
 ## Installation
 
 First, [install the LLM command-line utility](https://llm.datasette.io/en/stable/setup.html).
 
-Now install this plugin in the same environment as LLM.
+Now install this plugin in the same environment as LLM:
 ```bash
-llm install llm-xai
+llm install llm-moonshot
 ```
 
 ## Configuration
 
-You will need an API key from xAI. You can [obtain one here](https://console.x.ai).
+You’ll need an API key from Moonshot. Grab one at [platform.moonshot.cn](https://platform.moonshot.cn).
 
-You can set that as an environment variable called `XAI_KEY`, or add it to the `llm` set of saved keys using:
-
+Set secret key:
 ```bash
-llm keys set xai
+llm keys set moonshot
 ```
 ```
 Enter key: <paste key here>
@@ -30,82 +30,65 @@ Enter key: <paste key here>
 
 ## Usage
 
-To list available models, run:
+List what’s on the menu:
 ```bash
 llm models list
 ```
-You should see a list that looks something like this:
+You’ll see something like:
 ```
-xAI: xAI/grok-beta
-xAI: xAIcompletion/grok-beta
+Moonshot: moonshot/kimi-latest
+Moonshot: moonshot/moonshot-v1-auto
+Moonshot: moonshot/moonshot-v1-128k-vision-preview
+Moonshot: moonshot/kimi-k2-0711-preview
+Moonshot: moonshot/moonshot-v1-128k
+Moonshot: moonshot/moonshot-v1-32k-vision-preview
+Moonshot: moonshot/moonshot-v1-8k-vision-preview
+Moonshot: moonshot/moonshot-v1-8k
+Moonshot: moonshot/kimi-thinking-preview
+Moonshot: moonshot/moonshot-v1-32k
 ...
 ```
-To run a prompt against a model, pass its full model ID to the `-m` option, like this:
+
+Fire up a chat:
 ```bash
-llm chat -m xAI/grok-beta
+llm chat -m moonshot/kimi-k2-0711-preview
 ```
-Enter your prompt, and have a chat:
-```shell
-Chatting with xAI/grok-beta
+```
+Chatting with  moonshot/kimi-k2-0711-preview
 Type 'exit' or 'quit' to exit
 Type '!multi' to enter multiple lines, then '!end' to finish
-> sup playa
-Hey, what's up?
+> yo moonie
+yo! what’s up, moonie?
 >
 ```
 
-xAI offers a completion endpoint.
+Need raw completion?
 ```bash
-llm -m xAIcompletion/grok-beta "You must know this about me:"
+llm -m moonshot/moonshot-v1-8k "Finish this haiku: Neon city rain"
 ```
-```shell
- I’m not a fan of being alone. I have a hard time finding peace in the silence. My own thoughts drive me crazy. But I knew I had to do this for myself. I had to prove to myself that I could be alone and be okay with it
-...
+```
+Neon city rain,
+Glistening streets, a symphony,
+Echoes of the night.
 ```
 
-## Reasoning Feature
+## Aliases
 
-The xAI models `grok-3-mini-beta` and `grok-3-mini-fast-beta` support a `reasoning_effort` parameter that shows the model's internal reasoning process alongside its final response. Note that `grok-3-beta` and `grok-3-fast-beta` do not support reasoning.
-
-### Usage
-
+Save your wrists:
 ```bash
-llm -m xAI/grok-3-mini-beta "What is 101*3?" -o reasoning_effort high
+llm aliases set kimi moonshot/kimi-latest
 ```
-
-To disable streaming:
-
+Now:
 ```bash
-llm -m xAI/grok-3-mini-beta "What is 101*3?" -o reasoning_effort high --no-stream
+llm -m kimi "write a haiku about the AI chatbot Sidney is misbehaving"
 ```
 
-Available options:
-- `high`: More detailed reasoning
-- `low`: Quick, less detailed reasoning
-
-Works with both chat and completion models.
-
-You can set a shorter alias for a model using the `llm aliases` command like so:
-```bash
-llm aliases set grok xAI/grok-beta
-```
-Now you can prompt Claude using:
-```bash
-cat llm_xai.py | llm -m grok-beta -s 'write some pytest tests for this'
-```
 ## Development
 
-To set up this plugin locally, first checkout the code. Then create a new virtual environment:
+Clone, venv, deps—same dance:
 ```bash
-cd llm-xai
+git clone https://github.com/ghostofpokemon/llm-moonshot.git
+cd llm-moonshot
 python3 -m venv venv
 source venv/bin/activate
-```
-Now install the dependencies and test dependencies:
-```bash
-pip install -e '.[test]'
-```
-To run the tests:
-```bash
-pytest
-```
+pip install -e .

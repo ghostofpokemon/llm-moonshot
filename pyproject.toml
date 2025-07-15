@@ -1,21 +1,25 @@
 [project]
-name = "llm-xai"
-version = "0.2"
-description = "LLM plugin for models hosted by OpenRouter"
+name = "llm-moonshot"
+version = "0.2.1"
+description = "Run prompts against LLMs hosted by Moonshot"
 readme = "README.md"
-authors = [{ name = "Nick Mystic" }]
-license = { text = "Apache-2.0" }
+authors = [{ name = "NickMystic" }]
+requires-python = ">=3.9"
+dependencies = ["llm>=0.22", "httpx", "httpx-sse", "rich>=13.0"]
 classifiers = ["License :: OSI Approved :: Apache Software License"]
-dependencies = ["llm>=0.8", "httpx"]
 
 [project.urls]
-Homepage = "https://github.com/ghostofpokemon/llm-xai"
-Changelog = "https://github.com/ghostofpokemon/llm-xai/releases"
-Issues = "https://github.com/ghostofpokemon/llm-xai/issues"
-CI = "https://github.com/ghostofpokemon/llm-xai/actions"
+Homepage = "https://github.com/ghostofpokemon/llm-inception"
+Repository = "https://github.com/ghostofpokemon/llm-inception"
+Changelog = "https://github.com/ghostofpokemon/llm-inception/releases"
+Issues = "https://github.com/ghostofpokemon/llm-inception/issues"
 
-[project.entry-points.llm]
-xai = "llm_xai"
+[project.entry-points."llm"]
+inception = "llm_inception"
 
 [project.optional-dependencies]
-test = ["pytest", "pytest-httpx"]
+test = ["pytest", "pytest-httpx", "pytest-asyncio"]
+
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
