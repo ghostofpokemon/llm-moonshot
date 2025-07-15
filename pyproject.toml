@@ -1,6 +1,6 @@
 [project]
 name = "llm-moonshot"
-version = "0.2.1"
+version = "0.2.2"
 description = "Run prompts against LLMs hosted by Moonshot"
 readme = "README.md"
 authors = [{ name = "NickMystic" }]
@@ -9,13 +9,13 @@ dependencies = ["llm>=0.22", "httpx", "httpx-sse", "rich>=13.0"]
 classifiers = ["License :: OSI Approved :: Apache Software License"]
 
 [project.urls]
-Homepage = "https://github.com/ghostofpokemon/llm-inception"
-Repository = "https://github.com/ghostofpokemon/llm-inception"
-Changelog = "https://github.com/ghostofpokemon/llm-inception/releases"
-Issues = "https://github.com/ghostofpokemon/llm-inception/issues"
+Homepage = "https://github.com/ghostofpokemon/llm-moonshot"
+Repository = "https://github.com/ghostofpokemon/llm-moonshot"
+Changelog = "https://github.com/ghostofpokemon/llm-moonshot/releases"
+Issues = "https://github.com/ghostofpokemon/llm-moonshot/issues"
 
 [project.entry-points."llm"]
-inception = "llm_inception"
+moonshot = "llm_moonshot"
 
 [project.optional-dependencies]
 test = ["pytest", "pytest-httpx", "pytest-asyncio"]
