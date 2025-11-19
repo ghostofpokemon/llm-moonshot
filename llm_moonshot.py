@@ -5,6 +5,8 @@ from pathlib import Path
 import json
 import time
 import httpx
+from rich.console import Console
+from rich.style import Style
 
 def get_moonshot_models():
     return fetch_cached_json(
@@ -17,13 +19,32 @@ class MoonshotChat(Chat):
     needs_key = "moonshot"
     key_env_var = "MOONSHOT_KEY"
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.console = Console()
+        self.reasoning_style = Style(
+            color="cyan",
+            dim=True,
+            italic=True
+        )
+
     def __str__(self):
         return f"Moonshot: {self.model_id}"
+
+    def _display_reasoning_content(self, reasoning_content):
+        """Display reasoning content with special formatting"""
+        if reasoning_content and reasoning_content.strip():
+            self.console.print("\n[Reasoning]\n\n", style=self.reasoning_style, end="")
+            self.console.print(reasoning_content, style=self.reasoning_style)
+            self.console.print("\n[Response]\n\n", style="bold green", end="")
 
     def execute(self, prompt, stream, response, conversation=None, key=None):
         client = self.get_client(key=key)
         messages = self.build_messages(prompt, conversation)
         kwargs = remove_dict_none_values(prompt.options.dict())
+
+        # Check if this model supports reasoning_content
+        supports_reasoning = "thinking" in self.model_name.lower()
 
         if stream:
             completion_stream = client.chat.completions.create(
@@ -32,10 +53,24 @@ class MoonshotChat(Chat):
                 stream=True,
                 **kwargs,
             )
+            reasoning_started = False
+
             for chunk in completion_stream:
-                content = chunk.choices[0].delta.content
-                if content is not None:
-                    yield content
+                delta = chunk.choices[0].delta
+
+                # Handle reasoning_content in streaming
+                if supports_reasoning and hasattr(delta, 'reasoning_content') and delta.reasoning_content:
+                    if not reasoning_started:
+                        self.console.print("\n[Reasoning]\n\n", style=self.reasoning_style, end="")
+                        reasoning_started = True
+                    self.console.print(delta.reasoning_content, style=self.reasoning_style, end="")
+
+                # Handle regular content
+                if delta.content:
+                    if reasoning_started:
+                        self.console.print("\n[Response]\n\n", style="bold green", end="")
+                        reasoning_started = False
+                    yield delta.content
         else:
             completion = client.chat.completions.create(
                 model=self.model_name,
@@ -46,8 +81,17 @@ class MoonshotChat(Chat):
             response.response_json = completion.model_dump()
             if completion.usage:
                 self.set_usage(response, completion.usage.model_dump())
-            content = completion.choices[0].message.content
-            yield content
+
+            message = completion.choices[0].message
+
+            # Handle reasoning_content in non-streaming
+            if supports_reasoning and hasattr(message, 'reasoning_content') and message.reasoning_content:
+                self._display_reasoning_content(message.reasoning_content)
+
+            # Handle regular content
+            content = message.content
+            if content:
+                yield content
 
 @llm.hookimpl
 def register_models(register):

@@ -1,7 +1,7 @@
 # llm-moonshot
 LLM plugin for Moonshot AI’s models
 
-[![PyPI](https://img.shields.io/pypi/v/llm-moonshot.svg)](hhttps://pypi.org/project/llm-moonshot/0.2.2/)
+[![PyPI](https://img.shields.io/pypi/v/llm-moonshot.svg)](https://pypi.org/project/llm-moonshot/0.3.0/)
 [![Changelog](https://img.shields.io/github/v/release/ghostofpokemon/llm-moonshot?include_prereleases&label=changelog)](https://github.com/ghostofpokemon/llm-moonshot/releases)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/ghostofpokemon/llm-moonshot/blob/main/LICENSE)
 
@@ -71,6 +71,34 @@ Neon city rain,
 Glistening streets, a symphony,
 Echoes of the night.
 ```
+
+## Reasoning Content Support
+
+This plugin now supports **reasoning content** for Moonshot's thinking models (models with "thinking" in the name). When using thinking models, you'll see the model's reasoning process displayed in real-time before the final response:
+
+```bash
+llm chat -m moonshot/kimi-k2-thinking
+```
+```
+[Reasoning] (shown in cyan dim)
+
+The user is asking me to solve a complex problem. Let me think through this step by step...
+First, I need to understand the core requirements...
+Then I'll analyze the available options...
+
+[Response] (shown in bold green)
+
+Here's my well-reasoned answer to your question...
+```
+
+### Available Thinking Models
+- `moonshot/kimi-k2-thinking` - Latest reasoning model
+- `moonshot/kimi-thinking-preview` - Preview reasoning model
+
+The reasoning content helps you understand:
+- **Decision-making process** - See how the model analyzes problems
+- **Multi-step reasoning** - Follow complex thought chains
+- **Error detection** - Catch logical gaps or misunderstandings early
 
 ## Aliases
 

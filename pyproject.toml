@@ -1,6 +1,6 @@
 [project]
 name = "llm-moonshot"
-version = "0.2.2"
+version = "0.3.0"
 description = "Run prompts against LLMs hosted by Moonshot"
 readme = "README.md"
 authors = [{ name = "NickMystic" }]
