@@ -38,7 +38,7 @@ class MoonshotChat(Chat):
             self.console.print(reasoning_content, style=self.reasoning_style)
             self.console.print("\n[Response]\n\n", style="bold green", end="")
 
-    def execute(self, prompt, stream, response, conversation=None, key=None):
+    def execute(self, prompt, stream, response, conversation=None, **kwargs):
         client = self.get_client(key=key)
         messages = self.build_messages(prompt, conversation)
         kwargs = remove_dict_none_values(prompt.options.dict())
