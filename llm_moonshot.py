@@ -146,4 +146,6 @@ def fetch_cached_json(url, path, cache_timeout, **kwargs):
         if path.is_file():
             with open(path, "r") as f:
                 return json.load(f)
+        with open(path, "w") as f:
+            json.dump({"data": []}, f)
         return {"data": []}
